@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport", content="width=device-width, initial scale=1.0">
+        <title>Napoleon vs. Mamelucy</title>
+        <link rel="shortcut icon" href="../content/mml_icon.png">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body class="piramidy">
+        <canvas id="board" class="piramidy"></canvas>
+        <button class="rada-button">
+            <a href="wybor-mapy.html" class="mapy-button">Wybór mapy</a>
+        </button>
+        <script>
+            let board;
+            let boardWidth = 1800;
+            let boardHeight = 826;
+            let context;
+
+            let mamelukWidth = 90;
+            let mamelukHeight = 222;
+            let mamelukX = Math.random() * (boardWidth - mamelukWidth);
+            let mamelukY = Math.random() * (boardHeight - 167 - mamelukHeight);
+            let mamelukImg;
+
+            let wynik = 0;
+
+            let dzwiek = new Audio("../../content/death_c_500.mp3");
+
+            let mameluk = {
+                x : mamelukX,
+                y : mamelukY,
+                width : mamelukWidth,
+                height : mamelukHeight,
+            }
+
+            window.onload = function() {
+                board = document.getElementById("board");
+                board.height = boardHeight;
+                board.width = boardWidth;
+                context = board.getContext("2d");
+
+                mamelukImg = new Image();
+                mamelukImg.src = "../../content/mml.png";
+                mamelukImg.onload = function() {
+                    context.drawImage(mamelukImg, mameluk.x, mameluk.y, mameluk.width, mameluk.height);
+                }    
+
+                aktualizacjaWyniku();
+
+                board.addEventListener("mousedown", klik)
+            }
+
+            function losowanieMiejsca() {
+                return {
+                    x: Math.random() * (boardWidth - mamelukWidth),
+                    y: Math.random() * (boardHeight - 167 - mamelukHeight),
+                };
+            }
+
+            function aktualizacjaWyniku() {
+                context.fillStyle = "white";
+                context.font = "80px sans-serif";
+                context.fillText(wynik, boardWidth - 450, boardHeight - 50);
+            }
+
+            function klik(event) {
+                let rect = board.getBoundingClientRect();
+                let clickX = event.clientX - rect.left;
+                let clickY = event.clientY - rect.top;
+
+                if (clickX >= mameluk.x && clickX <= mameluk.x + mameluk.width && clickY >= mameluk.y && clickY <= mameluk.y + mameluk.height) {
+                    mameluk = losowanieMiejsca();
+                    mameluk.width = mamelukWidth;
+                    mameluk.height = mamelukHeight;
+
+                    dzwiek.currentTime = 0;
+                    dzwiek.play();
+
+                    wynik++;
+
+                    context.clearRect(0, 0, board.width, board.height);
+                    context.drawImage(mamelukImg, mameluk.x, mameluk.y, mameluk.width, mameluk.height);
+                    aktualizacjaWyniku();
+                }
+            }
+        </script>
+    </body>
+</html>

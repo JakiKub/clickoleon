@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport", content="width=device-width, initial scale=1.0">
+        <title>Napoleon vs. Rada Pięciuset</title>
+        <link rel="shortcut icon" href="../content/c_500_icon.png">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body class="rada-body">
+        <canvas id="boardRada" class="rada-canvas"></canvas>
+        <button class="rada-button">
+            <a href="wybor-mapy.html" class="mapy-button">Wybór mapy</a>
+        </button>
+        <script>
+            let boardRada;
+            let boardRadaWidth = 1800;
+            let boardRadaHeight = 826;
+            let context;
+
+            let czlonekRadyWidth = 100;
+            let czlonekRadyHeight = 224;
+            let czlonekRadyX = Math.random() * (boardRadaWidth - czlonekRadyWidth);
+            let czlonekRadyY = Math.random() * (boardRadaHeight - 167 - czlonekRadyHeight);
+            let czlonekRadyImg;
+
+            let wynik = 0;
+
+            let dzwiek = new Audio("../content/death_c_500.mp3");
+
+            let czlonekRady = {
+                x : czlonekRadyX,
+                y : czlonekRadyY,
+                width : czlonekRadyWidth,
+                height : czlonekRadyHeight,
+            }
+
+            window.onload = function() {
+                boardRada = document.getElementById("boardRada");
+                boardRada.height = boardRadaHeight;
+                boardRada.width = boardRadaWidth;
+                context = boardRada.getContext("2d");
+
+                czlonekRadyImg = new Image();
+                czlonekRadyImg.src = "../content/c_500.png";
+                czlonekRadyImg.onload = function() {
+                    context.drawImage(czlonekRadyImg, czlonekRady.x, czlonekRady.y, czlonekRady.width, czlonekRady.height);
+                }
+
+                aktualizacjaWyniku();
+
+                boardRada.addEventListener("mousedown", klik)
+            }
+
+            function losowanieMiejsca() {
+                return {
+                    x: Math.random() * (boardRadaWidth - czlonekRadyWidth),
+                    y: Math.random() * (boardRadaHeight - 167 - czlonekRadyHeight),
+                };
+            }
+
+            function aktualizacjaWyniku() {
+                context.fillStyle = "white";
+                context.font = "80px sans-serif";
+                context.fillText(wynik, boardRadaWidth - 450, boardRadaHeight - 50);
+            }
+
+            function klik(event) {
+                let rect = boardRada.getBoundingClientRect();
+                let clickX = event.clientX - rect.left;
+                let clickY = event.clientY - rect.top;
+
+                if (clickX >= czlonekRady.x && clickX <= czlonekRady.x + czlonekRady.width && clickY >= czlonekRady.y && clickY <= czlonekRady.y + czlonekRady.height) {
+                    czlonekRady = losowanieMiejsca();
+                    czlonekRady.width = czlonekRadyWidth;
+                    czlonekRady.height = czlonekRadyHeight;
+
+                    dzwiek.currentTime = 0;
+                    dzwiek.play();
+
+                    wynik++;
+
+                    context.clearRect(0, 0, boardRada.width, boardRada.height);
+                    context.drawImage(czlonekRadyImg, czlonekRady.x, czlonekRady.y, czlonekRady.width, czlonekRady.height);
+                    aktualizacjaWyniku();
+                }
+            }
+        </script>
+    </body>
+</html>
