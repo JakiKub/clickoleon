@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport", content="width=device-width, initial scale=1.0">
         <title>Napoleon vs. Mamelucy</title>
-        <link rel="shortcut icon" href="../content/mml_icon.png">
+        <link rel="shortcut icon" href="content/mml_icon.png">
         <link rel="stylesheet" href="style.css">
     </head>
     <body class="piramidy">
@@ -26,7 +26,7 @@
 
             let wynik = 0;
 
-            let dzwiek = new Audio("../../content/death_c_500.mp3");
+            let dzwiek = new Audio("content/death_c_500.mp3");
 
             let mameluk = {
                 x : mamelukX,
@@ -42,7 +42,7 @@
                 context = board.getContext("2d");
 
                 mamelukImg = new Image();
-                mamelukImg.src = "../../content/mml.png";
+                mamelukImg.src = "content/mml.png";
                 mamelukImg.onload = function() {
                     context.drawImage(mamelukImg, mameluk.x, mameluk.y, mameluk.width, mameluk.height);
                 }    

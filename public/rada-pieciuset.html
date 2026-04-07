@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport", content="width=device-width, initial scale=1.0">
         <title>Napoleon vs. Rada Pięciuset</title>
-        <link rel="shortcut icon" href="../content/c_500_icon.png">
+        <link rel="shortcut icon" href="content/c_500_icon.png">
         <link rel="stylesheet" href="style.css">
     </head>
     <body class="rada-body">
@@ -26,7 +26,7 @@
 
             let wynik = 0;
 
-            let dzwiek = new Audio("../content/death_c_500.mp3");
+            let dzwiek = new Audio("content/death_c_500.mp3");
 
             let czlonekRady = {
                 x : czlonekRadyX,
@@ -42,7 +42,7 @@
                 context = boardRada.getContext("2d");
 
                 czlonekRadyImg = new Image();
-                czlonekRadyImg.src = "../content/c_500.png";
+                czlonekRadyImg.src = "content/c_500.png";
                 czlonekRadyImg.onload = function() {
                     context.drawImage(czlonekRadyImg, czlonekRady.x, czlonekRady.y, czlonekRady.width, czlonekRady.height);
                 }

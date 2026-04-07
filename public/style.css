@@ -5,7 +5,7 @@ body.rada-body {
 }
 
 canvas.rada-canvas {
-    background-image: url("../content/c_500_background_pl.png");
+    background-image: url("content/c_500_background_pl.png");
     position: absolute;
     width: auto;
     height: auto;
